@@ -1,0 +1,146 @@
+﻿@model CliniqonProject.Models.LoginTbl
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en" data-x="html" data-x-toggle="html-overflow-hidden">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title> Tour - Login </title>
+</head>
+
+<body>
+    @using (Html.BeginForm("Login", "User", FormMethod.Post, new { role = "form", @class = "formBox", id = "loginform" }))
+    {
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="bgc center">
+            <div class="container">
+                <div class="header">
+                    <h1><span class="l">L</span>OGIN</h1>
+                </div>
+                <form>
+                    <label class="">Email Address</label>
+                    @Html.TextBoxFor(m => m.Email, new { @required="required",@class="inp" })
+                   
+                    <span asp-validation-for="Email" class="text-danger" style="color: red;"></span>
+                    <label for="psw">Password</label>
+                    <input type="text" class="inp" id="password" name="Password" value="@(Model != null ? Model.Password : "")" />
+                    <span asp-validation-for="Password" class="text-danger" style="color: red;"></span>
+                    <button type="submit">LOGIN</button>
+                    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+                </form>
+                <div class="signup">
+                    <b>Don't have account?</b>
+                    <a asp-action="RegisterUser" asp-controller="User">Sign up</a>
+                </div>
+            </div>
+        </div>
+    }
+
+
+</body>
+
+</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}
+
+<style>
+   
+
+    .container {
+        background-color: #fff;
+        padding: 30px;
+        width: 450px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+        .header h1 {
+            font-size: 30px;
+            color: #000;
+        }
+
+    h1 > .l {
+        font-size: 30px;
+        color: #8c0000;
+    }
+
+    label {
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    .inp {
+        font-weight: 500;
+        width: 100%;
+        padding: 2.5px 3.75px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 2px solid #132;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+    }
+
+        .inp,
+        .inp:focus {
+            outline: none;
+        }
+
+    button {
+        background-color: #8c0000;
+        color: white;
+        padding: 12px 20px;
+        margin: 50px 0;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        opacity: 0.925;
+    }
+
+        button:hover {
+            opacity: 1;
+        }
+
+    .signup {
+        width: 250px;
+        padding: 0 7.5px;
+        text-align: center;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .signup a {
+            font-weight: 800;
+            color: #8c0000;
+            text-decoration: none;
+        }
+
+            .signup a:hover {
+                text-decoration: underline;
+            }
+
+</style>

@@ -1,0 +1,31 @@
+﻿@model IEnumerable<CliniqonProject.Models.UserTbl>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Profile";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h3 class="display-4">User List</h3>
+        <p class="lead">Browse and view user details below.</p>
+    </div>
+    <div class="row">
+        @foreach (var user in Model)
+        {
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <img src="~/PkgImage/@(user.ProfilePic)" class="card-img-top" alt="@user.Name's Profile Picture" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">@user.Name</h5>
+                        <p class="card-text">
+                            Email: @user.Email <br />
+                            Designation: @user.Designation
+                        </p>
+                        <a href="@Url.Action("UserDetails", "User", new { id = user.UserId })" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

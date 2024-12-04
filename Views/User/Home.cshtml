@@ -1,0 +1,58 @@
+﻿@model CliniqonProject.Models.UserTbl
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Profile";
+}
+
+<div class="container mt-5" style="background-color: #f8f9fa; border-radius: 10px; padding: 20px;">
+    <div class="row">
+        <!-- Profile Picture and Basic Details -->
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <img src="~/PkgImage/@(Model.ProfilePic)" alt="Profile Picture" class="rounded-circle mb-3" style="width: 120px; height: 120px;" />
+                    <h5 class="card-title">@Model.Name</h5>
+                    <p class="text-muted">@Model.Designation</p>
+                    <p class="text-muted"><i class="bi bi-geo-alt-fill"></i> @Model.Country</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Details -->
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Profile Details</h5>
+                    <hr />
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Name:</div>
+                        <div class="col-sm-8">@Model.Name</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Email:</div>
+                        <div class="col-sm-8">@Model.Email</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Gender:</div>
+                        <div class="col-sm-8">@Model.Gender</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Date of Birth:</div>
+                        <div class="col-sm-8">@Model.DOB.ToString("dd MMM yyyy")</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Favorite Actor:</div>
+                        <div class="col-sm-8">@Model.FavoriteActor</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Favorite Color:</div>
+                        <div class="col-sm-8">@Model.FavoriteColor</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

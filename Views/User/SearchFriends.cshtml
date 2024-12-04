@@ -1,0 +1,285 @@
+﻿@model IEnumerable<CliniqonProject.Models.UserTbl>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Profile";
+}
+<div class="filter-section">
+    <div class="text-center mb-4">
+        <h4 class="display-4">Search Friends..</h4>
+        <p class="lead">Browse and view user details below.</p>
+    </div>
+    <div class="filter-controls">
+        <!-- Name Search -->
+        <div class="filter-item">
+            <label for="nameSearch">Name:</label>
+            <input type="text" id="nameSearch" placeholder="Search by name" />
+        </div>
+
+        <!-- Filter Options -->
+        <div class="filter-item">
+            <label for="dobFilter">DOB:</label>
+            <input type="date" id="dobFilter" />
+        </div>
+        <div class="filter-item">
+            <label for="genderFilter">Gender:</label>
+            <select id="genderFilter">
+                <option value="">--Select--</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="filter-item">
+            <label for="colorFilter">Favorite Colour:</label>
+            <input type="text" id="colorFilter" placeholder="Search by color" />
+        </div>
+        <div class="filter-item">
+            <label for="actorFilter">Favorite Actor:</label>
+            <input type="text" id="actorFilter" placeholder="Search by actor" />
+        </div>
+    </div>
+    <div class="d-flex justify-content-end mt-3">
+        <a asp-action="SearchFriends" asp-controller="User" class="navbar-brand fw-bold me-2" style="margin-top: 24px;">Reset</a>
+        <button class="btn btn-primary apply-filters">Apply Filters</button>
+    </div>
+</div>
+
+<table class="user-table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>DOB</th>
+            <th>Favorite Colour</th>
+            <th>Favorite Actor</th>
+            <th id="addedDateHeader">
+                Added Date
+                <span id="sortAddedDate" style="cursor: pointer;">&#x21C5;</span>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td><img class="profile-pic" src="~/PkgImage/@(user.ProfilePic)" alt="Profile Picture" /></td>
+                <td>@user.Name</td>
+                <td>@user.Gender</td>
+                <td>@String.Format("{0:dd-MMM-yyyy}", user.DOB)</td>
+                <td>@user.FavoriteColor</td>
+                <td>@user.FavoriteActor</td>
+                <td>@String.Format("{0:dd-MMM-yyyy}", @user.AddedDate)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".apply-filters").click(function () {
+                var name = $("#nameSearch").val();
+                var dob = $("#dobFilter").val();
+                var gender = $("#genderFilter").val();
+                var color = $("#colorFilter").val();
+                var actor = $("#actorFilter").val();
+
+                $.ajax({
+                    url: '/User/ApplyFilter',
+                    type: 'GET',
+                    data: {
+                        name: name,
+                        dob: dob,
+                        gender: gender,
+                        color: color,
+                        actor: actor
+                    },
+                    success: function (response) {
+                        $('.user-table tbody').html(response.html);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error: " + status + " - " + error);
+                        alert("An error occurred while filtering the data. Please try again.");
+                    }
+                });
+            });
+        });
+
+        document.getElementById('sortAddedDate').addEventListener('click', function () {
+            let table = document.querySelector('.user-table');
+            let rows = Array.from(table.querySelectorAll('tbody tr'));
+            let ascending = this.dataset.order !== 'asc';
+
+            rows.sort((a, b) => {
+                let dateA = new Date(a.querySelector('td:nth-child(7)').textContent.trim());
+                let dateB = new Date(b.querySelector('td:nth-child(7)').textContent.trim());
+
+                if (ascending) {
+                    return dateA - dateB;
+                } else {
+                    return dateB - dateA;
+                }
+            });
+
+            this.dataset.order = ascending ? 'asc' : 'desc';
+
+            rows.forEach(row => table.querySelector('tbody').appendChild(row));
+        });
+
+    </script>
+}
+
+<style>
+    /* General table styles */
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styles */
+.user-table thead tr {
+    background-color: #f4f4f4;
+    color: #333;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.user-table thead th {
+    padding: 12px 15px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Body row styles */
+.user-table tbody tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s;
+}
+
+.user-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.user-table tbody td {
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+
+/* Profile picture styles */
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ddd;
+}
+
+/* Responsive design */
+@@media (max-width: 768px) {
+    .user-table {
+        font-size: 14px;
+    }
+
+    .user-table thead {
+        display: none;
+    }
+
+    .user-table tbody tr {
+        display: block;
+        margin-bottom: 10px;
+        border-bottom: none;
+    }
+
+    .user-table tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .user-table tbody td img {
+        margin-right: 10px;
+    }
+}
+    /* Styling for the filter section */
+    .filter-section {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+        .filter-section h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+    .filter-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .filter-item {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-width: 150px;
+    }
+
+        .filter-item label {
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .filter-item input,
+        .filter-item select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+            .filter-item input[type="date"] {
+                padding: 5px;
+            }
+
+    .apply-filters {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+        .apply-filters:hover {
+            background-color: #0056b3;
+        }
+
+    #sortAddedDate {
+        display: inline-block;
+        margin-left: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .filter-section .button-group {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1rem;
+    }
+
+        .filter-section .button-group button {
+            margin-left: 0.5rem;
+        }
+</style>

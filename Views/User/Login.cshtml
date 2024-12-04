@@ -33,7 +33,7 @@
                     <span asp-validation-for="Email" class="text-danger" style="color: red;"></span>
                     <label for="psw">Password</label>
                     <input type="text" class="inp" id="password" name="Password" value="@(Model != null ? Model.Password : "")" />
-                    <span asp-validation-for="Password" class="text-danger" style="color: red;"></span>
+                    <span asp-validation-for="Password" class="text-danger" style="color: red;">@ViewBag.passwordError</span>
                     <button type="submit">LOGIN</button>
                     <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
                 </form>

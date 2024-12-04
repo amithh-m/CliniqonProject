@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace CliniqonProject.Controllers
 {
@@ -35,6 +36,11 @@ namespace CliniqonProject.Controllers
         {
             string email = login.Email;
             string password = login.Password;
+            if (password == null)
+            {
+                ViewBag.passwordError = "Please enter a valid password";
+                return View(login);
+            }
             string encrptPass = Encrypt(password);
 
             var user = from username in context.LoginTbl
@@ -382,7 +388,9 @@ namespace CliniqonProject.Controllers
                             u.Status == true &&
                             (u.FavoriteColor == loggedInUser.FavoriteColor || 
                              u.FavoriteActor == loggedInUser.FavoriteActor || 
-                             u.Country == loggedInUser.Country)) 
+                             u.Country == loggedInUser.Country ||
+                             u.DOB == loggedInUser.DOB)) 
+                             
                 .ToList();
 
             return View(matchingUsers);

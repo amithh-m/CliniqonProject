@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CliniqonProject</title>
+    <title>@ViewData["Title"] - Cliniqon Project</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CliniqonProject.styles.css" asp-append-version="true" />
@@ -20,7 +20,7 @@
         <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
-                    CliniqonProject
+                    Cliniqon
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -30,28 +30,42 @@
                         @if (userId != null && userId != 0)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="UserList">Home</a>
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="UserList">
+                                    <i class="bi bi-house-door"></i> Home
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="SearchFriends">Search Friends</a>
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="SearchFriends">
+                                    <i class="bi bi-search"></i> Search Friends
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="MatchFriends">Matches</a>
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="MatchFriends">
+                                    <i class="bi bi-heart"></i> Matches
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="Home">My Profile</a>
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="Home">
+                                    <i class="bi bi-person"></i> My Profile
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="MyFriends">My Friends</a>
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="MyFriends">
+                                    <i class="bi bi-person-check"></i> My Friends
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="btn btn-outline-danger btn-sm ms-2" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+                                <a class="btn btn-outline-danger btn-sm ms-2" asp-area="" asp-controller="User" asp-action="Logout">
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="btn btn-primary btn-sm ms-2" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+                                <a class="btn btn-primary btn-sm ms-2" asp-area="" asp-controller="User" asp-action="Login">
+                                    <i class="bi bi-box-arrow-in-right"></i> Login
+                                </a>
                             </li>
                         }
                     </ul>
